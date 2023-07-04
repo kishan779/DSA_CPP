@@ -12,29 +12,29 @@
 class Solution {
 public:
 
+    unordered_map<int, int>u;
+
+    TreeNode* build(vector<int>post, int &postidx, int si, int ei){
+      if(postidx < 0 || si > ei)
+      return NULL;
+
+      TreeNode* root =new TreeNode(post[postidx]);
+      postidx--;
+
+      int rootidx = u[root->val];
+      root ->right = build(post, postidx, rootidx+1,ei);
+      root ->left = build(post, postidx, si, rootidx-1);
+
+      return root;
+    }
+
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-        if(inorder.size()!=postorder.size()){
-            return NULL;
-        }
-        map<int,int> inMap;
-        for(int i=0;i<inorder.size();i++){
-            inMap[inorder[i]]=i;
-        }
+       for(int i =0; i< inorder.size(); i++){
+         u[inorder[i]] =i;
+       }
+
+       int postidx = postorder.size()-1;
+       return build(postorder, postidx,0,postorder.size()-1);
        
-        return helper(inorder,0,inorder.size()-1,postorder,0,postorder.size()-1,inMap);
     }
-
-        TreeNode* helper(vector<int>&inorder,int is,int ie,vector<int>&postorder,int ps,int pe,map<int,int> &hm){
-        if(is>ie || ps>pe){
-            return NULL;
-        }
-        TreeNode* root=new TreeNode(postorder[pe]);
-        int inRoot=hm[postorder[pe]];
-        int numsLeft=inRoot-is;
-
-        root->left=helper(inorder,is,inRoot-1,postorder,ps,ps+numsLeft-1,hm);
-        root->right=helper(inorder,inRoot+1,ie,postorder,ps+numsLeft,pe-1,hm);
-        return root;
-    }
-
 };
