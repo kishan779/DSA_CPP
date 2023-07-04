@@ -1,23 +1,23 @@
 class Solution {
 public:
-    int compareVersion(string version1, string version2) {
-        int i =0, j=0, nn =0, mm=0;
-        int n = version1.size(), m = version2.size();
+    int compareVersion(string s1, string s2) {
+        int i =0, j=0, c1 =0, c2=0;
+        int n = s1.length(), m = s2.length();
 
         while(i<n || j<m){
-          while(i < n && version1[i] !='.'){
-            nn = nn* 10 + (version1[i] - '0');
+          while(i < n && s1[i] !='.'){
+            c1 = c1* 10 + (s1[i] - '0');
             i++;
-          }while(j<m && version2[j] != '.'){
-            mm = mm * 10 + (version2[j] - '0');
+          }while(j<m && s2[j] != '.'){
+            c2 = c2 * 10 + (s2[j] - '0');
             j++;
           }
-          if( nn > mm)
+          if( c1 > c2)
           return 1;
-          else if(nn < mm)
+          else if(c1 < c2)
           return -1;
 
-          nn =0, mm =0;
+          c1 =0, c2 =0;
           i++, j++;
         }
         return 0;
