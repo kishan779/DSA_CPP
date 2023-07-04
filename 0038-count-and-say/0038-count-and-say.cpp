@@ -1,27 +1,28 @@
+#include <iostream>
+using namespace std;
+
 class Solution {
 public:
     string countAndSay(int n) {
-     if(n == 1)
-      return "1";
+     if(n==1) return "1";
+     if(n==2) return "11";
 
-      string say = countAndSay(n-1);
-
-      // processing 
-
-      string result = "";
-
-      for( int i =0; i <say.length(); i++){
-        char ch = say[i];
-
-        int count = 1;
-
-        while( i< say.length()-1 && say[i] == say[i+1]){
-          count++;
-          i++;
+     string s ="11";
+     for(int i =3; i<=n;i++){
+      string t="";
+      s= s+'&';
+      int c = 1;
+      for(int j =1; j<s.length(); j++){
+        if(s[j]!=s[j-1]){
+          t = t+to_string(c);
+          t = t+s[j-1];
+          c=1;
         }
-
-        result += to_string(count) + string (1,ch);
+        else c++;
       }
-      return result;
+      s=t;
+     }
+     return s;
+
     }
 };
