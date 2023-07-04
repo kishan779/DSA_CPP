@@ -3,17 +3,20 @@ public:
     string countAndSay(int n) {
         if(n==0) return "";
         string res = "1";
-        while(--n){
-          string cur = "";
-          for( int i =0; i<res.size(); i++){
-            int c=1;
-            while(i+res.size() and res[i] == res[i+1]){
-              c++;
+        while(n>1){
+          string tmp = "";
+          int si= res.size();
+          for( int i =0; i<si; i++){
+            int cnt=1;
+            // string tmp = "";
+            while(i+1<si && res[i] == res[i+1]){
+              cnt++;
               i++;
             }
-            cur+=to_string(c)+ res[i];
+            tmp+=to_string(cnt)+ res[i];
           }
-          res = cur;
+          res = tmp;
+          --n;
         }
         return res;
 
