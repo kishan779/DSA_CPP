@@ -1,37 +1,26 @@
 class Solution {
 public:
-    int compareVersion(string v1, string v2) {
-        // d1 d2 -> store the count of .
+    int compareVersion(string version1, string version2) {
+        int i =0, j=0, nn =0, mm=0;
+        int n = version1.size(), m = version2.size();
 
-        int d1 = count (v1.begin(), v1.end(), '.');
-        int d2 = count (v2.begin(), v2.end(), '.');
+        while(i<n || j<m){
+          while(i < n && version1[i] !='.'){
+            nn = nn* 10 + (version1[i] - '0');
+            i++;
+          }while(j<m && version2[j] != '.'){
+            mm = mm * 10 + (version2[j] - '0');
+            j++;
+          }
+          if( nn > mm)
+          return 1;
+          else if(nn < mm)
+          return -1;
 
-
-            int dif = abs(d1-d2);
-            if(d1>d2){
-              // .0
-              while(dif--) v2 +=".0";
-            }else if(d1<d2){
-              // .0
-              while(dif--) v1+=".0";
-            }
-
-            replace(v1.begin(),v1.end(),'.',' ' );
-            replace(v2.begin(),v2.end(),'.',' ' );
-
-            // StringStream sin(" 1  13  45") sin>>x>>y>>z; x=1,y=13,z=45;
-
-            stringstream ssv1(v1), ssv2(v2);
-
-            int n1, n2;
-
-            while( ssv1>>n1){
-              ssv2>>n2;
-
-              if(n1<n2) return -1;
-              else if(n2<n1) return 1;
-            }
-            return 0;
-
+          nn =0, mm =0;
+          i++, j++;
+        }
+        return 0;
+         
     }
 };
