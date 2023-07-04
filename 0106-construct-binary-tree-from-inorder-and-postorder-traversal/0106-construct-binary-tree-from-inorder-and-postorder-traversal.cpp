@@ -11,6 +11,8 @@
  */
 class Solution {
 public:
+
+    // function to return a tree created from postorder and inorder traversal
     int findpos(vector<int> &inorder, int ele,int n){
          for(int i=0;i<n;i++){
              if(inorder[i]==ele){
@@ -19,14 +21,24 @@ public:
          }
          return -1;
     }
+
+
     TreeNode* solve(vector<int> &inorder, vector<int> &postorder,int &index,int start,int end,int n){
-        if(index< 0 || start>end) return nullptr;
+
+        // Base case
+        if(index< 0 || start>end){
+          return nullptr;
+        }
+
+        // create a root node for element
         int ele = postorder[index--];
         int pos = findpos(inorder,ele,n);
 
+        // find element's index in order
         TreeNode* temp = new TreeNode(ele);
-          temp->right = solve(inorder,postorder,index,pos+1,end,n);
-
+        
+        // recursive calls
+        temp->right = solve(inorder,postorder,index,pos+1,end,n);
         temp->left = solve(inorder,postorder,index,start,pos-1,n);
       
         return temp;
