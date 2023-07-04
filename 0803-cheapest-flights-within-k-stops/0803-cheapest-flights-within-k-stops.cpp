@@ -1,49 +1,16 @@
 class Solution {
-public:
-    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-
-      vector<int> distance(n, INT_MAX);
-
-      unordered_map <int,vector<pair<int, int>>>adj;
-
-      for(vector<int> &vec : flights){
-        int u = vec[0];
-        int v = vec[1];
-        int cost = vec[2];
-
-        adj[u].push_back({v,cost});
-      }
-
-      // BFS
-      queue<pair<int, int>> que;
-      que.push({src,0});
-      distance[src]= 0;
-
-      int steps =0;
-
-      while(!que.empty() && steps <= k){
-        int N = que.size();
-
-        while(N--){
-          int u = que.front().first;
-          int d = que.front().second;
-
-          que.pop();
-
-          for(pair<int, int> &p :adj[u]){
-            int v = p.first;
-            int cost = p.second;
-
-            if(distance[v]> d+cost){
-              distance[v] = d+cost;
-              que.push({v, d+cost});
-            }
-          }
-        }
-        steps++;
-      }
-      return distance[dst] == INT_MAX ? -1:distance[dst];
-
-        
-    }
+public://@CodeVed
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K) {
+        vector<int> cost(n, INT_MAX);
+        cost[src] = 0;
+        for (int i = 0; i <= K; i++) {
+            vector<int> temp = cost;
+            for (auto f : flights) {
+                if (cost[f[0]] != INT_MAX)
+                    temp[f[1]] = min(temp[f[1]], cost[f[0]] + f[2]);
+            }//@CodeVed
+            cost = temp;
+        }//@CodeVed
+        return cost[dst] != INT_MAX ? cost[dst] : -1;
+    }//@CodeVed
 };
