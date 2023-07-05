@@ -10,26 +10,25 @@
  * };
  */
 class Solution {
+  pair<int, int> diameterOfBinaryTree_util(TreeNode* root){
+    if(!root)
+      return make_pair(0,0);
+
+      pair<int, int> left= diameterOfBinaryTree_util(root->left);
+      pair<int, int> right = diameterOfBinaryTree_util(root->right);
+
+      int internal_path = max(left.second, right.second);
+      if(left.first+right.first+1>internal_path)
+        internal_path = left.first+ right.first+1;
+
+        return make_pair(max(left.first,right.first)+1, internal_path);
+  }
+
 public:
     int diameterOfBinaryTree(TreeNode* root) {
-       if(root == NULL) return 0;
-       if(root->left == NULL && root->right==NULL) return 0;
-
-       int max=0;
-       bst(root, max);
-       return max;
+      if(!root)
+      return 0;
+      pair<int, int> result = diameterOfBinaryTree_util(root);
+      return max(result.first, result.second)-1;
     }
-
-
-    int bst (TreeNode* root, int& max){
-      if(root== NULL) return 0;
-
-      int left = bst(root->left, max);
-      int right = bst(root->right, max);
-      int height = (left>right)?left+1:right+1;
-      if(left+right>max)max= left+right;
-      return height;
-    }
-
-  
 };
